@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiderfoot & Nmap Correlation Analysis Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header py-16">
+            <h1 class="header-title">Spiderfoot & Nmap Correlation Analysis Tool</h1>
+            <p class="header-description">Demonstrating how OSINT and network scanning complement each other in reconnaissance activities</p>
+        </header>
+
+        <!-- Dashboard Overview -->
+        <section class="dashboard-stats mb-8">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-findings">10</div>
+                    <div class="stat-label">Total Findings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="correlations-count">6</div>
+                    <div class="stat-label">Correlations Discovered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number risk-high" id="high-risk">2</div>
+                    <div class="stat-label">High Risk Items</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number risk-medium" id="medium-risk">5</div>
+                    <div class="stat-label">Medium Risk Items</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation mb-8">
+            <button class="tab-btn active" data-tab="osint">OSINT Findings</button>
+            <button class="tab-btn" data-tab="nmap">Network Scan</button>
+            <button class="tab-btn" data-tab="correlations">Correlation Analysis</button>
+        </nav>
+
+        <!-- Search and Filter Controls -->
+        <div class="controls mb-8">
+            <input type="text" id="search-input" class="form-control search-input" placeholder="Search findings...">
+            <select id="risk-filter" class="form-control risk-filter">
+                <option value="">All Risk Levels</option>
+                <option value="High">High Risk</option>
+                <option value="Medium">Medium Risk</option>
+                <option value="Low">Low Risk</option>
+            </select>
+            <button class="btn btn--secondary" id="export-btn">Export Results</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- OSINT Findings Tab -->
+            <div id="osint-tab" class="tab-pane active">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Spiderfoot OSINT Findings</h3>
+                        <p class="help-text">Click on any finding to highlight related network scan results</p>
+                    </div>
+                    <div class="card__body">
+                        <div class="table-container">
+                            <table class="data-table" id="osint-table">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Finding</th>
+                                        <th>Value</th>
+                                        <th>Source</th>
+                                        <th>Risk Level</th>
+                                        <th>Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="osint-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Scan Tab -->
+            <div id="nmap-tab" class="tab-pane">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Nmap Network Scan Results</h3>
+                        <p class="help-text">Click on any scan result to highlight related OSINT findings</p>
+                    </div>
+                    <div class="card__body">
+                        <div class="table-container">
+                            <table class="data-table" id="nmap-table">
+                                <thead>
+                                    <tr>
+                                        <th>IP Address</th>
+                                        <th>Port</th>
+                                        <th>Service</th>
+                                        <th>Version</th>
+                                        <th>State</th>
+                                        <th>Risk Level</th>
+                                        <th>Vulnerabilities</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="nmap-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Correlation Analysis Tab -->
+            <div id="correlations-tab" class="tab-pane">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Correlation Analysis</h3>
+                        <p class="help-text">Understanding how OSINT findings relate to network scan results</p>
+                    </div>
+                    <div class="card__body">
+                        <div class="correlation-controls mb-8">
+                            <div class="correlation-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color strong"></div>
+                                    <span>Strong Correlation (>1.2)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color moderate"></div>
+                                    <span>Moderate Correlation (1.0-1.2)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color weak"></div>
+                                    <span>Weak Correlation (<1.0)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="correlation-table">
+                                <thead>
+                                    <tr>
+                                        <th>OSINT Finding</th>
+                                        <th>OSINT Type</th>
+                                        <th>Network Target</th>
+                                        <th>Service</th>
+                                        <th>Correlation Score</th>
+                                        <th>Combined Risk</th>
+                                        <th>Correlation Reasons</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="correlation-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip hidden"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
